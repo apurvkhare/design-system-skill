@@ -1,0 +1,23 @@
+{
+  "summary": "tenet-ui ships its design tokens AND its component styles as ONE stylesheet (tenet-ui/styles.css). Every var(--token) and every Tenet-* component class is undefined until that stylesheet is imported once at the app root. Theming is just an attribute — data-color-mode=\"light|dark\" on an ancestor (usually <html>); :root defaults to light. There is NO provider component to mount. Without the import the UI renders fully unstyled: transparent/paper-less background, no borders, default serif/sans fallback, collapsed spacing, broken controls — even though the code 'uses tokens and components'. This is the #1 failure mode; the runtime audit gate exists to catch it.",
+  "cssImports": [
+    "tenet-ui/styles.css"
+  ],
+  "providers": [],
+  "themeAttribute": {
+    "name": "data-color-mode",
+    "values": [
+      "light",
+      "dark"
+    ],
+    "appliedTo": "the documentElement (or any ancestor of the UI)"
+  },
+  "entryExample": "// app entry (e.g. main.tsx) — import the stylesheet exactly once:\nimport 'tenet-ui/styles.css';\nimport { createRoot } from 'react-dom/client';\nimport App from './App';\n\n// theming is an attribute, not a provider:\ndocument.documentElement.dataset.colorMode = 'light'; // or 'dark'\n\ncreateRoot(document.getElementById('root')!).render(<App />);",
+  "verifyTokensResolve": [
+    "--bgColor-default",
+    "--fgColor-default",
+    "--borderColor-default",
+    "--fontFamily-body",
+    "--space-3"
+  ]
+}

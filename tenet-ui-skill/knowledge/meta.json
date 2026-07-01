@@ -1,0 +1,11 @@
+{
+  "designSystem": "Tenet UI (Editorial Ink)",
+  "package": "tenet-ui",
+  "counts": {
+    "tokens": 98,
+    "components": 36,
+    "guidelines": 36
+  },
+  "hasRuntimeContract": true,
+  "generatedFrom": "src/components/**/*.docs.json"
+}

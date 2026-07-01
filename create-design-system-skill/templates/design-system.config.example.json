@@ -1,0 +1,60 @@
+{
+  "designSystem": "Acme UI",
+  "package": "@acme/ui",
+  "packages": { "ui": "1.4.0", "primitives": "2.0.1" },
+  "knowledgeDir": "knowledge",
+
+  "tokens": {
+    "__doc": "mode: npm-json | repo-file (read a JSON file from a package/repo dir) | url (fetch+merge per-theme + non-color token JSON) | manual (knowledge/tokens.json authored by hand). Canonical token shape: { \"<name>\": { name, cssVar, type, description, light, dark } } for themed, or { ...\"value\" } for shared.",
+    "mode": "npm-json",
+    "packageDir": "../../../path/to/package-or-repo",
+    "path": "dist/tokens.json",
+    "urls": {
+      "themeUrl": "https://cdn.example/@acme/primitives@{primitives}/themes/{theme}.json",
+      "themes": ["light", "dark"],
+      "nonColorUrl": "https://cdn.example/@acme/primitives@{primitives}/{path}.json",
+      "nonColor": ["spacing/space", "size/size", "typography/typography"]
+    }
+  },
+
+  "components": {
+    "__doc": "mode: npm-json | repo-file (read generated/components.json) | url (fetch it) | manual. Accepts either { components: { <id>: {...} } } or the inner map. Each entry: { name, props:[{name,type,required,defaultValue,description}], subcomponents, importPath }.",
+    "mode": "npm-json",
+    "packageDir": "../../../path/to/package-or-repo",
+    "path": "generated/components.json",
+    "url": "https://cdn.example/@acme/ui@{ui}/generated/components.json",
+    "importPath": "@acme/ui"
+  },
+
+  "usage": {
+    "__doc": "mode: package-md | repo-md (copy guidelines/*.md) | storybook-url (index.json → usage/stories.json) | manual (model authors knowledge/usage/*.md from Confluence/Docs/screenshots) | none.",
+    "mode": "storybook-url",
+    "packageDir": "../../../path/to/package-or-repo",
+    "dir": "guidelines",
+    "storybookIndexUrl": "https://acme.style/storybook/index.json"
+  },
+
+  "icons": {
+    "__doc": "OPTIONAL. mode: repo-svgs (readdir *.svg → names) | json (array/object of names from path or url) | manual (author knowledge/icons.json) | none. componentPattern documents the API shape, e.g. \"<Icon name=\\\"...\\\" />\" or \"named-export\".",
+    "package": "@acme/icons",
+    "importPath": "@acme/icons",
+    "mode": "repo-svgs",
+    "packageDir": "../../../path/to/icons-package-or-repo",
+    "path": "svg",
+    "componentPattern": "<Icon name=\"...\" />",
+    "usage": "Use <Icon name=\"...\"/> from @acme/icons; never inline <svg> or a raw icon font."
+  },
+
+  "runtime": {
+    "__doc": "How the DS bootstraps so tokens/component styles resolve at runtime. The #1 failure mode is skipping this. classPrefix (optional) is the component CSS class namespace, e.g. \"Acme-\".",
+    "summary": "@acme/ui ships tokens + component styles as one stylesheet. Every var(--token) and Acme-* class is undefined until '@acme/ui/styles.css' is imported once at the app root. Theming is the data-theme attribute on an ancestor. Without the import the UI renders fully unstyled.",
+    "cssImports": ["@acme/ui/styles.css"],
+    "classPrefix": "Acme-",
+    "providers": [],
+    "themeAttribute": { "name": "data-theme", "values": ["light", "dark"], "appliedTo": "the documentElement (or any ancestor of the UI)" },
+    "entryExample": "import '@acme/ui/styles.css';\nimport { createRoot } from 'react-dom/client';\nimport App from './App';\ndocument.documentElement.dataset.theme = 'light';\ncreateRoot(document.getElementById('root')).render(<App />);",
+    "verifyTokensResolve": ["--bgColor-default", "--fgColor-default", "--borderColor-default"]
+  },
+
+  "render": { "app": "../path/to/demo-app", "url": "http://localhost:5173" }
+}
